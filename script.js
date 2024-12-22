@@ -7,19 +7,17 @@ const user = {
 };
 
 user.mood = "happy";
-
 user.hobby = "skydiving";
-
 user.premium = false;
 
-for (const key of Object.keys(user)) {
-  const { [key]: value } = user;
+for (const [key, value] of Object.entries(user)) {
   console.log(`${key}: ${value}`);
 }
 
 // Завдання 2
 function countProps(obj) {
-  return Object.keys(obj).length;
+  const { length: propCount } = Object.keys(obj);
+  return propCount;
 }
 
 console.log(countProps({ name: "John", age: 30 })); // 2
@@ -66,6 +64,8 @@ console.log(
     Helen: 800,
   })
 );
+
+// Завдання 5
 function getAllPropValues(arr, prop) {
   const values = [];
 
@@ -78,6 +78,7 @@ function getAllPropValues(arr, prop) {
 
   return values;
 }
+
 console.log(
   getAllPropValues(
     [
@@ -93,8 +94,7 @@ console.log(
 function calculateTotalPrice(allProducts, productName) {
   let totalPrice = 0;
 
-  for (const product of allProducts) {
-    const { name, price, quantity } = product;
+  for (const { name, price, quantity } of allProducts) {
     if (name === productName) {
       totalPrice = price * quantity;
       break;
