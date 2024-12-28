@@ -1,31 +1,47 @@
 // Завдання 1
 const user = {
   name: "John",
-  age: 30,
-  hobby: "reading",
+  age: 17,
+  hobby: "football",
   premium: true,
 };
 
+user.hobby = "tennis";
 user.mood = "happy";
-user.hobby = "skydiving";
 user.premium = false;
 
-for (const [key, value] of Object.entries(user)) {
-  console.log(`${key}: ${value}`);
-}
+const {
+  name: userName,
+  hobby: userHobby,
+  premium: userPremium,
+  mood: userMood,
+  age: userAge,
+} = user;
+console.log(userName, userHobby, userPremium, userMood, userAge);
+Object.entries(user).forEach(([key, value]) => console.log(`${key}: ${value}`));
 
 // Завдання 2
 function countProps(obj) {
-  const { length: propCount } = Object.keys(obj);
-  return propCount;
+  if (typeof obj !== "object" || obj === null) {
+    throw new Error("Параметр має бути об'єктом.");
+  }
+  return Object.keys(obj).length;
 }
-
-console.log(countProps({ name: "John", age: 30 })); // 2
+console.log(countProps(user));
 
 // Завдання 3
+const employeePerformance = {
+  Peter: 12,
+  Louis: 19,
+  Stewie: 6,
+  Brian: 27,
+  Quagmire: 15,
+  Joe: 33,
+};
+
 function findBestEmployee(employees) {
   let maxTasks = 0;
-  let bestEmployee = "";
+  let bestEmployee = null;
 
   for (const [name, tasks] of Object.entries(employees)) {
     if (tasks > maxTasks) {
@@ -34,134 +50,110 @@ function findBestEmployee(employees) {
     }
   }
 
-  return bestEmployee;
+  return `Our best employee is ${bestEmployee} with performance of ${maxTasks}`;
 }
 
-console.log(
-  findBestEmployee({
-    Ann: 29,
-    David: 35,
-    Helen: 1,
-    Lorence: 99,
-  })
-);
+console.log(findBestEmployee(employeePerformance));
 
 // Завдання 4
+const employeeSalaries = {
+  Peter: 1000,
+  Louis: 2000,
+  Stewie: 300,
+  Brian: 3500,
+  Quagmire: 1200,
+  Joe: 4000,
+};
+
 function countTotalSalary(employees) {
-  let totalSalary = 0;
-
-  for (const salary of Object.values(employees)) {
-    totalSalary += salary;
-  }
-
-  return totalSalary;
+  return Object.values(employees).reduce((total, salary) => total + salary, 0);
 }
 
-console.log(
-  countTotalSalary({
-    Ann: 1000,
-    David: 1500,
-    Helen: 800,
-  })
-);
+console.log(countTotalSalary(employeeSalaries));
+
+const { Peter, Louis, Stewie, Brian, Quagmire, Joe } = employeeSalaries;
+console.log(Peter, Louis, Stewie, Brian, Quagmire, Joe);
 
 // Завдання 5
 function getAllPropValues(arr, prop) {
-  const values = [];
-
-  for (const obj of arr) {
-    const { [prop]: value } = obj;
-    if (value !== undefined) {
-      values.push(value);
-    }
-  }
-
-  return values;
+  return arr.map((obj) => obj[prop]).filter((value) => value !== undefined);
 }
 
-console.log(
-  getAllPropValues(
-    [
-      { name: "Apple", price: 50 },
-      { name: "Banana", price: 30 },
-      { name: "Orange", price: 25 },
-    ],
-    "name"
-  )
-);
+const productList = [
+  { name: "Apple", price: 100, quantity: 50 },
+  { name: "Banana", price: 80, quantity: 150 },
+  { name: "Cherry", price: 120, quantity: 30 },
+];
+
+console.log(getAllPropValues(productList, "name"));
+console.log(getAllPropValues(productList, "price"));
+console.log(getAllPropValues(productList, "quantity"));
+
+for (const {
+  name: productName,
+  price: productPrice,
+  quantity: productQuantity,
+} of productList) {
+  console.log(
+    `Name: ${productName}, Price: ${productPrice}, Quantity: ${productQuantity}`
+  );
+}
 
 // Завдання 6
 function calculateTotalPrice(allProducts, productName) {
-  let totalPrice = 0;
-
-  for (const { name, price, quantity } of allProducts) {
-    if (name === productName) {
-      totalPrice = price * quantity;
-      break;
-    }
-  }
-
-  return totalPrice;
+  const product = allProducts.find(({ name }) => name === productName);
+  return product ? product.price * product.quantity : 0;
 }
 
-console.log(
-  calculateTotalPrice(
-    [
-      { name: "Laptop", price: 1000, quantity: 3 },
-      { name: "Phone", price: 500, quantity: 10 },
-      { name: "Tablet", price: 800, quantity: 5 },
-    ],
-    "Phone"
-  )
-);
+console.log(calculateTotalPrice(productList, "Apple"));
+console.log(calculateTotalPrice(productList, "Banana"));
+console.log(calculateTotalPrice(productList, "Cherry"));
 
 // Завдання 7
 const account = {
   balance: 0,
-  transactions: [],
-
-  createTransaction(type, amount) {
-    return {
-      id: this.transactions.length + 1,
-      type,
-      amount,
-    };
-  },
+  withdrawals: [],
+  deposits: [],
 
   deposit(amount) {
-    const transaction = this.createTransaction("deposit", amount);
-    this.transactions.push(transaction);
+    if (typeof amount !== "number" || amount <= 0) {
+      console.log("Сума повинна бути позитивним числом.");
+      return;
+    }
     this.balance += amount;
+    this.deposits.push(amount);
   },
 
   withdraw(amount) {
-    if (amount > this.balance) {
-      console.log("Недостатньо коштів на рахунку");
+    if (typeof amount !== "number" || amount <= 0) {
+      console.log("Сума повинна бути позитивним числом.");
       return;
     }
-    const transaction = this.createTransaction("withdraw", amount);
-    this.transactions.push(transaction);
+    if (amount > this.balance) {
+      console.log("На цьому рахунку недостатньо коштів.");
+      return;
+    }
     this.balance -= amount;
+    this.withdrawals.push(amount);
   },
 
   getBalance() {
     return this.balance;
   },
 
-  getTransactionDetails(id) {
-    return this.transactions.find(({ id: transId }) => transId === id) || null;
+  getDepositTransactions() {
+    return this.deposits;
   },
 
-  getTransactionTotal(type) {
-    return this.transactions
-      .filter(({ type: transType }) => transType === type)
-      .reduce((total, { amount }) => total + amount, 0);
+  getWithdrawalTransactions() {
+    return this.withdrawals;
   },
 };
 
-account.deposit(500);
-account.deposit(200);
-account.withdraw(100);
-console.log("Баланс:", account.getBalance());
-console.log("Транзакція 2:", account.getTransactionDetails(2));
-console.log("Загальна сума депозитів:", account.getTransactionTotal("deposit"));
+account.deposit(1000);
+account.withdraw(200);
+account.deposit(2000);
+
+console.log("Current balance:", account.getBalance());
+console.log("Deposit transactions:", account.getDepositTransactions());
+console.log("Withdrawal transactions:", account.getWithdrawalTransactions());
