@@ -115,7 +115,7 @@ console.log(
   )
 );
 
-// Завдання 7: Особистий кабінет інтернет-банку
+// Завдання 7
 const account = {
   balance: 0,
   transactions: [],
