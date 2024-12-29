@@ -1,115 +1,128 @@
-// Завдання 1
-const user = {
-  name: "John",
-  age: 17,
-  hobby: "football",
-  premium: true,
+// 1.
+const userProfile = {
+  mood: "happy",
+  hobby: "basketball",
+  subscription: "true",
 };
 
-user.hobby = "tennis";
-user.mood = "happy";
-user.premium = false;
+userProfile.hobby = "skydiving";
+userProfile.subscription = "false";
+
+for (const property in userProfile) {
+  console.log(`${property}: ${userProfile[property]}`);
+}
+
+const { mood, hobby, subscription } = userProfile;
+console.log(mood, hobby, subscription);
+
+// 2.
+function countProperties(object) {
+  return Object.keys(object).length;
+}
+console.log(countProperties(userProfile));
+
+// 3.
+const teamPerformance = {
+  John: 15600,
+  Mike: 20000,
+  Alex: 17500,
+  Chris: 19000,
+  Oliver: 25000,
+  Jacob: 24500,
+};
+
+function findTopPerformer(employees) {
+  let maxPerformance = 0;
+  let topPerformer;
+
+  for (const employee in employees) {
+    if (employees[employee] > maxPerformance) {
+      maxPerformance = employees[employee];
+      topPerformer = employee;
+    }
+    console.log(`${employee}: ${employees[employee]}`);
+  }
+  return `${topPerformer}: ${maxPerformance}`;
+}
+console.log(findTopPerformer(teamPerformance));
+
+const { John, Mike, Alex, Chris, Oliver, Jacob } = teamPerformance;
+console.log(John, Mike, Alex, Chris, Oliver, Jacob);
+
+// 4.
+const salaries = {
+  John: 15600,
+  Mike: 20000,
+  Alex: 17500,
+  Chris: 19000,
+  Oliver: 25000,
+  Jacob: 24500,
+};
+
+function calculateTotalSalaries(employeeSalaries) {
+  let totalSalaries = 0;
+
+  for (const employee in employeeSalaries) {
+    totalSalaries += employeeSalaries[employee];
+    console.log(`${employee}: ${employeeSalaries[employee]}`);
+  }
+  return totalSalaries;
+}
+console.log(calculateTotalSalaries(salaries));
 
 const {
-  name: userName,
-  hobby: userHobby,
-  premium: userPremium,
-  mood: userMood,
-  age: userAge,
-} = user;
-console.log(userName, userHobby, userPremium, userMood, userAge);
-Object.entries(user).forEach(([key, value]) => console.log(`${key}: ${value}`));
+  John: johnSalary,
+  Mike: mikeSalary,
+  Alex: alexSalary,
+  Chris: chrisSalary,
+  Oliver: oliverSalary,
+  Jacob: jacobSalary,
+} = salaries;
+console.log(
+  johnSalary,
+  mikeSalary,
+  alexSalary,
+  chrisSalary,
+  oliverSalary,
+  jacobSalary
+);
 
-// Завдання 2
-function countProps(obj) {
-  if (typeof obj !== "object" || obj === null) {
-    throw new Error("Параметр має бути об'єктом.");
-  }
-  return Object.keys(obj).length;
-}
-console.log(countProps(user));
-
-// Завдання 3
-const employeePerformance = {
-  Peter: 12,
-  Louis: 19,
-  Stewie: 6,
-  Brian: 27,
-  Quagmire: 15,
-  Joe: 33,
-};
-
-function findBestEmployee(employees) {
-  let maxTasks = 0;
-  let bestEmployee = null;
-
-  for (const [name, tasks] of Object.entries(employees)) {
-    if (tasks > maxTasks) {
-      maxTasks = tasks;
-      bestEmployee = name;
-    }
-  }
-
-  return `Our best employee is ${bestEmployee} with performance of ${maxTasks}`;
-}
-
-console.log(findBestEmployee(employeePerformance));
-
-// Завдання 4
-const employeeSalaries = {
-  Peter: 1000,
-  Louis: 2000,
-  Stewie: 300,
-  Brian: 3500,
-  Quagmire: 1200,
-  Joe: 4000,
-};
-
-function countTotalSalary(employees) {
-  return Object.values(employees).reduce((total, salary) => total + salary, 0);
-}
-
-console.log(countTotalSalary(employeeSalaries));
-
-const { Peter, Louis, Stewie, Brian, Quagmire, Joe } = employeeSalaries;
-console.log(Peter, Louis, Stewie, Brian, Quagmire, Joe);
-
-// Завдання 5
-function getAllPropValues(arr, prop) {
-  return arr.map((obj) => obj[prop]).filter((value) => value !== undefined);
-}
-
-const productList = [
-  { name: "Apple", price: 100, quantity: 50 },
-  { name: "Banana", price: 80, quantity: 150 },
-  { name: "Cherry", price: 120, quantity: 30 },
+// 5.
+const friendsList = [
+  { name: "Mango", hobby: "programming" },
+  { name: "Kiwi", hobby: "football" },
+  { name: "Poly", hobby: "basketball" },
+  { name: "Ajax", hobby: "swimming" },
 ];
 
-console.log(getAllPropValues(productList, "name"));
-console.log(getAllPropValues(productList, "price"));
-console.log(getAllPropValues(productList, "quantity"));
-
-for (const {
-  name: productName,
-  price: productPrice,
-  quantity: productQuantity,
-} of productList) {
-  console.log(
-    `Name: ${productName}, Price: ${productPrice}, Quantity: ${productQuantity}`
-  );
+function getPropertyValues(array, property) {
+  let values = [];
+  for (const item of array) {
+    values.push(item[property]);
+  }
+  return values;
 }
+console.log(getPropertyValues(friendsList, "name"));
 
-// Завдання 6
-function calculateTotalPrice(allProducts, productName) {
-  const product = allProducts.find(({ name }) => name === productName);
-  return product ? product.price * product.quantity : 0;
+// 6.
+const productCatalog = [
+  { name: "Apple", price: 150, quantity: 10 },
+  { name: "Banana", price: 135, quantity: 15 },
+  { name: "Orange", price: 200, quantity: 12 },
+];
+
+function calculateProductTotalPrice(products, productName) {
+  for (const product of products) {
+    if (product.name === productName) {
+      console.log(`${productName} коштує ${product.price * product.quantity}`);
+    }
+  }
 }
+calculateProductTotalPrice(productCatalog, "Apple");
+calculateProductTotalPrice(productCatalog, "Banana");
+calculateProductTotalPrice(productCatalog, "Orange");
 
-console.log(calculateTotalPrice(productList, "Apple"));
-console.log(calculateTotalPrice(productList, "Banana"));
-console.log(calculateTotalPrice(productList, "Cherry"));
-
-// Завдання 7
+// 7.
 const account = {
   balance: 0,
   withdrawals: [],
@@ -154,6 +167,6 @@ account.deposit(1000);
 account.withdraw(200);
 account.deposit(2000);
 
-console.log("Current balance:", account.getBalance());
 console.log("Deposit transactions:", account.getDepositTransactions());
 console.log("Withdrawal transactions:", account.getWithdrawalTransactions());
+console.log("Current balance:", account.getBalance());
