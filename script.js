@@ -1,10 +1,9 @@
 // 1.
 const userProfile = {
-  mood: "happy",
-  hobby: "basketball",
+  hobby: "gaming",
   subscription: "true",
 };
-
+userProfile.mood = "happy";
 userProfile.hobby = "skydiving";
 userProfile.subscription = "false";
 
@@ -23,12 +22,12 @@ console.log(countProperties(userProfile));
 
 // 3.
 const teamPerformance = {
-  John: 15600,
-  Mike: 20000,
-  Alex: 17500,
-  Chris: 19000,
-  Oliver: 25000,
-  Jacob: 24500,
+  john: 15600,
+  mike: 20000,
+  alex: 17500,
+  chris: 19000,
+  oliver: 25000,
+  jacob: 24500,
 };
 
 function findTopPerformer(employees) {
@@ -42,21 +41,23 @@ function findTopPerformer(employees) {
     }
     console.log(`${employee}: ${employees[employee]}`);
   }
-  return `${topPerformer}: ${maxPerformance}`;
+
+  return topPerformer;
 }
+
 console.log(findTopPerformer(teamPerformance));
 
-const { John, Mike, Alex, Chris, Oliver, Jacob } = teamPerformance;
-console.log(John, Mike, Alex, Chris, Oliver, Jacob);
+const { john, mike, alex, chris, oliver, jacob } = teamPerformance;
+console.log(john, mike, alex, chris, oliver, jacob);
 
 // 4.
 const salaries = {
-  John: 15600,
-  Mike: 20000,
-  Alex: 17500,
-  Chris: 19000,
-  Oliver: 25000,
-  Jacob: 24500,
+  john: 15600,
+  mike: 20000,
+  alex: 17500,
+  chris: 19000,
+  oliver: 25000,
+  jacob: 24500,
 };
 
 function calculateTotalSalaries(employeeSalaries) {
@@ -71,12 +72,12 @@ function calculateTotalSalaries(employeeSalaries) {
 console.log(calculateTotalSalaries(salaries));
 
 const {
-  John: johnSalary,
-  Mike: mikeSalary,
-  Alex: alexSalary,
-  Chris: chrisSalary,
-  Oliver: oliverSalary,
-  Jacob: jacobSalary,
+  john: johnSalary,
+  mike: mikeSalary,
+  alex: alexSalary,
+  chris: chrisSalary,
+  oliver: oliverSalary,
+  jacob: jacobSalary,
 } = salaries;
 console.log(
   johnSalary,
